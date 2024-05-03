@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+@layer components {
+  .container {
+    @apply w-[80%] mx-auto;
+  }
+
+  .btn {
+    @apply text-[10px] font-semibold rounded-3xl;
+  }
+}
