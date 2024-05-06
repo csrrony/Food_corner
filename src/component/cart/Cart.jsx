@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { HiChevronDown } from "react-icons/hi";
 import { IoIosSearch } from "react-icons/io";
 import useQuantity from '../hooks/useQuantity';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Cart = () => {
@@ -15,6 +17,7 @@ const Cart = () => {
   const [subTotal, setSubTotal] = useState();
   const [shippingData, setShippingData] = useState({ country: '', state: '', zip: '' });
 
+  const navigate = useNavigate();
 
   const PerProductTotal = (price, qty) => {
     return (Number(price) * qty);
@@ -39,6 +42,10 @@ const Cart = () => {
     }
     fetchCountries()
   }, [])
+
+  const updatedNotify = () => {
+    toast("Total Updated")
+  }
 
 
   return (
@@ -109,10 +116,7 @@ const Cart = () => {
             <input type="text" placeholder='Coupon Code...' className=' outline-none border border-gray-200 px-2 font-semibold tracking-wider' />
             <button className=' bg-second text-white rounded-sm py-2 px-4'>Apply Coupon</button>
           </div>
-          <Link to={"/cart/payment"} className=' bg-primary hover:bg-blue-400 tracking-wider text-white rounded-md py-2 w-[190px] text-center' onClick={() => dispatch({
-            type: "ADD_ADDRESS",
-            payload: { address: shippingData }
-          })}>Proceed to Checkout</Link>
+          <button disabled={cart.length < 1 ? true : false} onClick={() => navigate("/cart/payment")} className={`  ${cart.length < 1 ? "bg-blue-400" : "bg-primary hover:bg-blue-600"} tracking-wider text-white rounded-md py-2 w-[190px] text-center`} >Proceed to Checkout</button>
         </div>
 
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-7'>
@@ -169,7 +173,8 @@ const Cart = () => {
               <input onChange={(e) => setShippingData({ ...shippingData, state: e.target.value })} type="text" autoComplete='off' placeholder='State/Division' className=' outline-none py-2 px-2 border border-gray-200 rounded-sm bg-white' value={shippingData.state} />
               <input onChange={(e) => setShippingData({ ...shippingData, zip: e.target.value })} type="text" autoComplete='off' placeholder='Postcode/ZIP' className=' py-2 px-2 outline-none border border-gray-200 rounded-sm bg-white' value={shippingData.zip} />
             </div>
-            <button type='submit' className=' bg-second w-[120px] py-2 text-sm text-white font-bold tracking-wide rounded-md'>Update Total</button>
+            <button type='submit' disabled={shippingData.country == '' || shippingData.state == '' || shippingData.zip == '' ? true : false} className={`${shippingData.country == '' || shippingData.state == '' || shippingData.zip == '' ? "bg-orange-300" : "bg-second"} w-[120px] py-2 text-sm text-white font-bold tracking-wide rounded-md`} onClick={updatedNotify}>Update Total</button>
+            <ToastContainer />
 
           </div>
 

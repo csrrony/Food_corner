@@ -20,6 +20,11 @@ export const Reducer = (state, action) => {
                 ...state,
                 shipping: [{ address: action.payload.address }]
             }
+        case "CLEAR_CART":
+            return {
+                ...state,
+                cart: []
+            }
         default:
             return state;
     }

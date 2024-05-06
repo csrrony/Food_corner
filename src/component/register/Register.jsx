@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -28,9 +28,6 @@ const Register = () => {
     reset()
   }
 
-  useEffect(() => {
-    console.log(datas)
-  }, [datas])
 
   return (
     <div className=' bg-[#73336F]'>
@@ -62,7 +59,7 @@ const Register = () => {
             <div className=' w-full'>
               <input
                 {...register('password')}
-                type="password" autoComplete='off' aut placeholder='Password' className=' rounded-sm w-full p-2 text-sm text-[#73336F] font-medium outline-none' />
+                type="password" autoComplete='off' placeholder='Password' className=' rounded-sm w-full p-2 text-sm text-[#73336F] font-medium outline-none' />
               <p className=' text-red-500 font-semibold h-7'>{errors?.password?.message}</p>
             </div>
 
